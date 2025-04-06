@@ -1,3 +1,6 @@
 ## FEES MANAGEMENT USING SPRINGBOOT
 
-## Do well to see setup.md
+
+## 📄 Setup Instructions
+
+👉 **Please refer to the full setup guide here:** [setup.md](./setup.md)

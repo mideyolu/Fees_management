@@ -59,14 +59,32 @@ spring.jpa.show-sql=true
 
 ## API Endpoints Overview
 
-| Method | Endpoint                           | Description                  |
-|--------|------------------------------------|------------------------------|
-| POST   | `auth/signup/student`              | Register a new student       |
-| POST   | `auth/signup/parent`               | Register a new parent        |
-| POST   | `auth/login/student`               | Student login                |
-| POST   | `auth/login/parent`                | Parent login                 |
-| PATCH  | `auth/change-password`             | Change password (both roles) |
-| PATCH  | `/api/student/assign-parent`       | Assign parent to student     |
+### Authentication & User Management
+
+| Method | Endpoint                           | Description                           |
+|--------|------------------------------------|---------------------------------------|
+| POST   | `/auth/signup/student`             | Register a new student                |
+| POST   | `/auth/signup/parent`              | Register a new parent                 |
+| POST   | `/auth/login/student`              | Student login                         |
+| POST   | `/auth/login/parent`               | Parent login                          |
+| PATCH  | `/auth/change-password`            | Change password (both roles)          |
+
+### Student and Parent Management
+
+| Method | Endpoint                           | Description                           |
+|--------|------------------------------------|---------------------------------------|
+| PATCH  | `/api/student/assign-parent`       | Assign parent to student              |
+| GET    | `/api/parents/children`            | Parent retrieves their assigned children's details |
+
+### Fee Management
+
+| Method | Endpoint                           | Description                           |
+|--------|------------------------------------|---------------------------------------|
+| POST   | `/api/fee/add`                     | Student adds a fee                    |
+| GET    | `/api/fee/my-fees`                 | Student retrieves all their fees      |
+| GET    | `/api/fee/{id}`                    | Student retrieves a particular fee by ID |
+| PUT    | `/api/fee/update/{id}`             | Student updates their fee by ID       |
+| DELETE | `/api/fee/delete/{id}`             | Student deletes their fee by ID       |
 
 > All requests should use `Content-Type: application/json`
 > Add token to headers like this:
@@ -117,9 +135,7 @@ student-management/
 ```
 
 ---
-
 ## Testing the API
-
 Use [Postman](https://www.postman.com/) Preferably download the local setup file
 
 ### Auth Endpoints
@@ -181,7 +197,6 @@ POST /login/parent
 ```
 
 ---
-
 ### Secure Endpoints
 
 #### Change Password
@@ -210,6 +225,121 @@ PATCH /api/student/assign-parent
   "parentEmail": "registeredparent@gmail.com"
 }
 ```
+---
+### Fee Management Endpoints
+
+#### Add Fee
+```http
+POST /api/fee/add
+```
+
+**Body:**
+```json
+{
+
+  "amountPaid": 1000,
+  "paymentDate": "2023-10-01",
+  "paymentStatus": "PAID"
+}
+```
+
+#### Retrieve All Fees (Student)
+```http
+GET /api/fee/my-fees
+```
+
+**Body:**
+```json
+[
+  {
+    "id": 1,
+    "amountPaid": 1000,
+    "paymentDate": "2023-10-01",
+    "paymentStatus": "PAID"
+  },
+  {
+    "id": 2,
+    "amountPaid": 1500,
+    "paymentDate": "2023-10-10",
+    "paymentStatus": "PENDING"
+  }
+]
+```
+
+#### Retrieve A  Particular Fees (Student)
+```http
+GET /api/fee/{id}
+```
+
+**Body:**
+```json
+  {
+    "id": 1,
+    "amountPaid": 1000,
+    "paymentDate": "2023-10-01",
+    "paymentStatus": "PAID"
+  },
+```
+
+#### Update Fee (Student)
+```http
+PUT /api/fee/update/{id}
+```
+
+**Body:**
+```json
+{
+  "amountPaid": 200,
+  "paymentDate": "2023-10-15",
+  "paymentStatus": "PARTIAL"
+}
+```
+
+#### Delete Fee (Student)
+```http
+DELETE /api/fee/delete/{id}
+```
+
+**Body:**
+```json
+{
+  "message": "Fee record deleted successfully."
+}
+
+```
+---
+
+#### Retrieve Parent's Children Details (Parent)
+```http
+GET /api/parents/children
+```
+
+**Body:**
+```json
+[
+  {
+    "firstName": "John",
+    "lastName": "Doe",
+    "dateOfBirth": "2005-05-10",
+    "gender": "Male",
+    "grade": "Grade 5",
+    "email": "john.doe@student.com",
+    "feeDetails": [
+      {
+        "amountPaid": 1000,
+        "paymentStatus": "PAID",
+        "paymentDate": "2023-09-10"
+      },
+      {
+        "amountPaid": 500,
+        "paymentStatus": "PENDING",
+        "paymentDate": "2023-10-01"
+      }
+    ]
+  }
+]
+```
+---
 
 > Make sure to include your JWT token in the `Authorization` header for secure endpoints.
 

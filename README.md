@@ -3,4 +3,4 @@
 
 ## Setup Instructions
 
-**Please refer to the full setup guide here:** [setup.md](./student-management/setup.md)
+**Please refer to the full setup guide here:** [Setup](./student-management/setup.md)

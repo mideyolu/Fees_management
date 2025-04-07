@@ -1,6 +1,6 @@
 ## FEES MANAGEMENT USING SPRINGBOOT
 
 
-## 📄 Setup Instructions
+## Setup Instructions
 
-👉 **Please refer to the full setup guide here:** [setup.md](./student-management/setup.md)
+**Please refer to the full setup guide here:** [setup.md](./student-management/setup.md)

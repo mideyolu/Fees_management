@@ -147,7 +147,7 @@ POST /signup/student
 }
 ```
 
-#### 🔸 Register Parent
+#### Register Parent
 
 ```http
 POST /signup/parent
@@ -165,7 +165,7 @@ POST /signup/parent
 }
 ```
 
-#### 🔸 Login (Both Roles)
+#### Login (Both Roles)
 
 ```http
 POST /login/student
@@ -182,9 +182,9 @@ POST /login/parent
 
 ---
 
-### 🔐 Secure Endpoints
+### Secure Endpoints
 
-#### 🔄 Change Password
+#### Change Password
 
 ```http
 PATCH /change-password

@@ -3,6 +3,8 @@ package com.example.studentmanagement.student_management.model;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Student implements User {
 
@@ -21,6 +23,8 @@ public class Student implements User {
     private String email;
     private String grade;
     private LocalDate enrollmentDate;
+
+    @JsonIgnore
     private String password;
 
     @ManyToOne

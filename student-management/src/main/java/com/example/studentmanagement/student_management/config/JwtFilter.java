@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.lang.NonNull;
 
 public class JwtFilter extends OncePerRequestFilter {
 
@@ -20,8 +21,11 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+    protected void doFilterInternal(
+        @NonNull HttpServletRequest request,
+        @NonNull HttpServletResponse response,
+        @NonNull FilterChain filterChain
+    ) throws ServletException, IOException {
         String token = extractToken(request);
         if (token != null && jwtUtil.validateToken(token, jwtUtil.extractUserId(token))) {
             String userId = jwtUtil.extractUserId(token);  // Extract userId from token
@@ -29,7 +33,11 @@ public class JwtFilter extends OncePerRequestFilter {
 
             // Create an authentication token using the userId and role.
             UsernamePasswordAuthenticationToken authentication =
-                    new UsernamePasswordAuthenticationToken(userId, null, Collections.singletonList(new SimpleGrantedAuthority(role)));
+                    new UsernamePasswordAuthenticationToken(
+                        userId,
+                        null,
+                        Collections.singletonList(new SimpleGrantedAuthority(role))
+                    );
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         filterChain.doFilter(request, response);

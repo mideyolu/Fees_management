@@ -19,6 +19,7 @@ public class JwtGenerator {
         String token = Jwts.builder()
                 .setSubject(userId)
                 .claim("role", role.name())
+                .claim("email",email)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(expirationTime))
                 .signWith(signingKey, SignatureAlgorithm.HS256)

@@ -2,6 +2,9 @@ package com.example.studentmanagement.student_management.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Positive;
 
 @Entity
 public class Fee {
@@ -14,15 +17,19 @@ public class Fee {
     @JoinColumn(name = "student_id")
     private Student student;
 
+    @Positive(message = "Amount must be positive")
     private Double amountPaid;
+
+    @PastOrPresent(message = "Payment date cannot be in the future")
     private LocalDate paymentDate;
 
-    @Enumerated(EnumType.STRING)
-    private PaymentStatus status; // Using enum instead of String
+    @Enumerated(EnumType.STRING)  // This ensures the enum is saved as a string in the database
+    @Column(name = "payment_status")  // Ensure this matches the column name in your database
+    private PaymentStatus paymentStatus;
 
     // Enum for payment status
     public enum PaymentStatus {
-        PAID, PENDING, PARTIAL, OVERDUE
+        PAID, PENDING
     }
 
     // Getters and setters
@@ -58,11 +65,11 @@ public class Fee {
         this.paymentDate = paymentDate;
     }
 
-    public PaymentStatus getStatus() {
-        return status;
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
     }
 
-    public void setStatus(PaymentStatus status) {
-        this.status = status;
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 }

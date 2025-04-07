@@ -1,5 +1,7 @@
 package com.example.studentmanagement.student_management.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -13,7 +15,10 @@ public class Parent implements User {
     private String email;
     private String firstName;
     private String lastName;
+
+    @JsonIgnore
     private String password;
+    
     private String phoneNumber;
     private String address;
 

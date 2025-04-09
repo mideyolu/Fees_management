@@ -16,8 +16,8 @@ public class ParentController {
     @Autowired
     private ParentService parentService;
 
-    @Autowired
-    private FeeService feeService;
+    // @Autowired
+    // private FeeService feeService;
 
     @Autowired
     private JwtUtil jwtUtil;
